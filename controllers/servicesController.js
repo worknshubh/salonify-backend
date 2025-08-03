@@ -1,13 +1,14 @@
 const jsonwebtoken = require("jsonwebtoken");
 const SaloonOwner = require("../models/saloonowner");
 const Service = require("../models/services");
+const { JWT_KEY } = require("../keys");
 
 const createService = async (req, res) => {
   const token = req.cookies.token;
   const { serviceTitle, serviceDesc, serviceCost } = req.body;
   if (token) {
     try {
-      const tokenData = jsonwebtoken.verify(token, "shubham@123");
+      const tokenData = jsonwebtoken.verify(token, JWT_KEY);
       const saloonOwnercheck = await Service.findOne({
         shopOwner: tokenData.id,
       });
@@ -45,7 +46,7 @@ const editservice = async (req, res) => {
   const { serviceTitle, serviceDesc, serviceCost } = req.body;
   if (token) {
     try {
-      const tokenData = jsonwebtoken.verify(token, "shubham@123");
+      const tokenData = jsonwebtoken.verify(token, JWT_KEY);
       const editingService = await Service.findOne({
         shopOwner: tokenData.id,
       });
@@ -70,7 +71,7 @@ const deleteservice = async (req, res) => {
   const token = req.cookies.token;
   if (token) {
     try {
-      const tokenData = jsonwebtoken.verify(token, "shubham@123");
+      const tokenData = jsonwebtoken.verify(token, JWT_KEY);
       const delService = await Service.findOne({
         shopOwner: tokenData.id,
       });

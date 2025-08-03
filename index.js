@@ -2,12 +2,11 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const PORT = 4444;
+
 const authRoute = require("./routes/auth");
 const serviceRoute = require("./routes/services");
-mongoose.connect(
-  "mongodb+srv://shub117788:shubham123@cluster0.knld0hn.mongodb.net/salonify?retryWrites=true&w=majority&appName=Cluster0/"
-);
+const { MONGO_DB_URL, PORT } = require("./keys");
+mongoose.connect(MONGO_DB_URL);
 mongoose.connection.on("connected", () => {
   console.log("Connected to Mongo DB");
   app.listen(PORT, "127.0.0.1", () => {
