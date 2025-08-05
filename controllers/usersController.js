@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const User = require("../models/user");
 const { JWT_KEY } = require("../keys");
+const Service = require("../models/services");
 
 const signupUser = async (req, res) => {
   const { userName, userEmail, userPass, userNumber, userAddress } = req.body;
@@ -40,4 +41,30 @@ const signinUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, signinUser };
+const bookService = async (req, res) => {
+  const id = req.params.id;
+  const { scheduledDate, scheduledTime } = req.body;
+  const token = req.cookies.token;
+
+  if (token) {
+    try {
+      const tokenData = jsonwebtoken.verify(token, JWT_KEY);
+      const bookingService = await Service.findOne({
+        shopOwner: id,
+      });
+      bookingService.servicesBooked.push({
+        bookedBy: tokenData.id,
+        scheduledDate: scheduledDate,
+        scheduledTime: scheduledTime,
+      });
+      await bookingService.save();
+      return res.json({ msg: "Service booked successfully" });
+    } catch (error) {
+      return res.json({ msg: error.message });
+    }
+  } else {
+    return res.json({ msg: "Unauthorized User" });
+  }
+};
+
+module.exports = { signupUser, signinUser, bookService };
