@@ -6,6 +6,7 @@ const app = express();
 const authRoute = require("./routes/auth");
 const serviceRoute = require("./routes/services");
 const userRoute = require("./routes/user");
+const browseRoute = require("./routes/browse");
 const { MONGO_DB_URL, PORT } = require("./keys");
 mongoose.connect(MONGO_DB_URL);
 mongoose.connection.on("connected", () => {
@@ -21,3 +22,4 @@ app.use(express.urlencoded());
 app.use("/auth", authRoute);
 app.use("/services", serviceRoute);
 app.use("/user", userRoute);
+app.use("/browse", browseRoute);

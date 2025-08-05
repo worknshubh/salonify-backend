@@ -30,13 +30,11 @@ const saloonowner_schema = new mongoose.Schema({
     required: true,
   },
   saloonLocation: {
-    cityData: {
-      saloonState: {
-        type: String,
-      },
-      saloonCity: {
-        type: String,
-      },
+    saloonState: {
+      type: String,
+    },
+    saloonCity: {
+      type: String,
     },
   },
 });
