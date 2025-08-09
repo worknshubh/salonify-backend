@@ -5,8 +5,15 @@ const { JWT_KEY } = require("../keys");
 const Service = require("../models/services");
 
 const signupUser = async (req, res) => {
-  const { userName, userEmail, userPass, userNumber, userAddress, userCity } =
-    req.body;
+  const {
+    userName,
+    userEmail,
+    userPass,
+    userNumber,
+    userAddress,
+    userCity,
+    userState,
+  } = req.body;
   try {
     const hashedPass = await bcrypt.hash(userPass, 10);
     await User.create({
@@ -16,6 +23,7 @@ const signupUser = async (req, res) => {
       userNumber: userNumber,
       userAddress: userAddress,
       "userLocation.userCity": userCity,
+      "userLocation.userState": userState,
     });
 
     return res.json({ msg: "User Created Successfully" });

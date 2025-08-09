@@ -1,5 +1,6 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 
@@ -15,7 +16,12 @@ mongoose.connection.on("connected", () => {
     console.log("Started on PORT ", PORT);
   });
 });
-
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded());

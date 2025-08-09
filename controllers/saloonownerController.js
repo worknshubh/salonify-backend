@@ -13,6 +13,7 @@ const signupSaloonOwner = async (req, res) => {
     saloonName,
     userAddress,
     saloonCity,
+    saloonState,
   } = req.body;
   try {
     const hashedPass = await bcrypt.hash(userPass, 10);
@@ -25,11 +26,12 @@ const signupSaloonOwner = async (req, res) => {
       userAddress: userAddress,
       saloonName: saloonName,
       "saloonLocation.saloonCity": saloonCity,
+      "saloonLocation.saloonState": saloonState,
     });
 
     return res.json({ msg: "User Created Successfully" });
   } catch (error) {
-    return res.json({ msg: error });
+    return res.json({ msg: error.message });
   }
 };
 
