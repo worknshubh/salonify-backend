@@ -30,6 +30,10 @@ app.use(
     credentials: true,
   })
 );
+app.get("/", (req, res) => {
+  res.send("Server is running!");
+});
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded());
