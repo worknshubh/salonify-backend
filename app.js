@@ -26,7 +26,7 @@ mongoose.connection.on("connected", () => {
 });
 app.use(
   cors({
-    origin: ["https://salonify-seven.vercel.app/"],
+    origin: ["https://salonify-seven.vercel.app"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
