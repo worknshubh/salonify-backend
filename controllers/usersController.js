@@ -51,7 +51,7 @@ const signinUser = async (req, res) => {
       const token = jsonwebtoken.sign({ id: userCheck._id }, JWT_KEY);
       return res
         .cookie("token", token, {
-          httpOnly: false,
+          httpOnly: true,
           sameSite: "none",
           secure: false,
           path: "/",
