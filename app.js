@@ -25,12 +25,7 @@ mongoose.connection.on("connected", () => {
   });
 });
 
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+app.use(cors());
 app.get("/", (req, res) => {
   res.send("Server is running!");
 });
