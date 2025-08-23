@@ -1,7 +1,8 @@
 const SaloonOwner = require("../models/saloonowner");
+require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
-const { JWT_KEY } = require("../keys");
+const JWT_KEY = process.env.JWT_KEY;
 
 const signupSaloonOwner = async (req, res) => {
   const {
@@ -17,6 +18,10 @@ const signupSaloonOwner = async (req, res) => {
   } = req.body;
   try {
     const hashedPass = await bcrypt.hash(userPass, 10);
+    if (saloonCity === null) {
+      saloonCity = "Kolkata";
+      saloonState = "West Bengal";
+    }
     await SaloonOwner.create({
       userName: userName,
       userEmail: userEmail,
@@ -27,6 +32,7 @@ const signupSaloonOwner = async (req, res) => {
       saloonName: saloonName,
       "saloonLocation.saloonCity": saloonCity,
       "saloonLocation.saloonState": saloonState,
+      userRole: "SaloonOwner",
     });
 
     return res.json({ msg: "User Created Successfully" });
@@ -45,7 +51,13 @@ const signinSaloonOwner = async (req, res) => {
     const userPasscheck = await bcrypt.compare(userPass, userCheck.userPass);
     if (userPasscheck === true) {
       const token = jsonwebtoken.sign({ id: userCheck._id }, JWT_KEY);
-      return res.cookie("token", token).json({ msg: "Login Successful" });
+      return res
+        .cookie("token", token, {
+          httpOnly: false,
+          sameSite: "none",
+          secure: true,
+        })
+        .json({ msg: "Login Successful" });
     } else {
       return res.json({ msg: "Invalid Email or Password" });
     }
@@ -54,4 +66,40 @@ const signinSaloonOwner = async (req, res) => {
   }
 };
 
-module.exports = { signupSaloonOwner, signinSaloonOwner };
+const updateprofile = async (req, res) => {
+  const token = req.cookies.token;
+  const {
+    userName,
+    userAddress,
+    userEmail,
+    userExperience,
+    saloonName,
+    userNumber,
+    userImage,
+  } = req.body;
+  if (token) {
+    try {
+      const tokenData = jsonwebtoken.verify(token, JWT_KEY);
+      const saloonownerData = await SaloonOwner.findOne({
+        _id: tokenData.id,
+      });
+      saloonownerData.userName = userName;
+      saloonownerData.userEmail = userEmail;
+      saloonownerData.userNumber = userNumber;
+      saloonownerData.userAddress = userAddress;
+      saloonownerData.userExperience = userExperience;
+      saloonownerData.saloonName = saloonName;
+      if (userImage != "") {
+        saloonownerData.userImage = userImage;
+      }
+
+      await saloonownerData.save();
+      return res.json({ msg: "Updated successfully" });
+    } catch (error) {
+      return res.json({ msg: error.message });
+    }
+  } else {
+    return res.json({ msg: "Unauthorized User" });
+  }
+};
+module.exports = { signupSaloonOwner, signinSaloonOwner, updateprofile };

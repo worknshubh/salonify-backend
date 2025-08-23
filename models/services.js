@@ -9,7 +9,6 @@ const services_schema = new mongoose.Schema({
       serviceTitle: {
         type: String,
         required: true,
-        unique: true,
       },
       serviceDesc: {
         type: String,
@@ -19,6 +18,9 @@ const services_schema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      serviceImage: {
+        type: String,
+      },
     },
   ],
   servicesBooked: [
@@ -27,13 +29,35 @@ const services_schema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "User",
       },
+      serviceTitle: {
+        type: String,
+      },
+      serviceCost: {
+        type: String,
+      },
       scheduledDate: {
-        type: Date,
+        type: String,
         required: true,
       },
       scheduledTime: {
         type: String,
         required: true,
+      },
+      serviceId: {
+        type: mongoose.Schema.ObjectId,
+        required: true,
+      },
+      transactionId: {
+        type: String,
+        // required: true,
+      },
+      phonePeTransactionId: {
+        type: String,
+        // required: false,
+      },
+      paymentStatus: {
+        type: String,
+        // required: true,
       },
     },
   ],

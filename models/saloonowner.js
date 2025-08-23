@@ -37,6 +37,20 @@ const saloonowner_schema = new mongoose.Schema({
       type: String,
     },
   },
+  userRole: {
+    type: String,
+    required: true,
+  },
+  services: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "service",
+    },
+  ],
+  userImage: {
+    type: String,
+    default: null,
+  },
 });
 
 const SaloonOwner = mongoose.model("Saloonowner", saloonowner_schema);
