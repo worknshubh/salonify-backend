@@ -57,6 +57,8 @@ const signinSaloonOwner = async (req, res) => {
           sameSite: "none",
           secure: true,
           path: "/",
+          domain: undefined,
+          maxAge: 24 * 60 * 60 * 1000,
         })
         .json({ msg: "Login Successful" });
     } else {
