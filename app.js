@@ -26,10 +26,8 @@ mongoose.connection.on("connected", () => {
 });
 app.use(
   cors({
-    origin: "https://salonify-seven.vercel.app",
+    origin: true,
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.get("/", (req, res) => {
