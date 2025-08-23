@@ -54,6 +54,7 @@ const signinUser = async (req, res) => {
           httpOnly: false,
           sameSite: "none",
           secure: true,
+          path: "/",
         })
         .json({ msg: "Login Successful" });
     } else {

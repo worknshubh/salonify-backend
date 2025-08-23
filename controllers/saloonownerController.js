@@ -56,6 +56,7 @@ const signinSaloonOwner = async (req, res) => {
           httpOnly: false,
           sameSite: "none",
           secure: true,
+          path: "/",
         })
         .json({ msg: "Login Successful" });
     } else {
