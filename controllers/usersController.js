@@ -49,7 +49,13 @@ const signinUser = async (req, res) => {
     const userPasscheck = await bcrypt.compare(userPass, userCheck.userPass);
     if (userPasscheck === true) {
       const token = jsonwebtoken.sign({ id: userCheck._id }, JWT_KEY);
-      return res.cookie("token", token).json({ msg: "Login Successful" });
+      return res
+        .cookie("token", token, {
+          httpOnly: false,
+          sameSite: "none",
+          secure: true,
+        })
+        .json({ msg: "Login Successful" });
     } else {
       return res.json({ msg: "Invalid Email or Password" });
     }
