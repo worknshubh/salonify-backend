@@ -20,7 +20,7 @@ const Service = require("./models/services");
 mongoose.connect(MONGO_DB_URL);
 mongoose.connection.on("connected", () => {
   console.log("Connected to Mongo DB");
-  app.listen(PORT, "127.0.0.1", () => {
+  app.listen(PORT, () => {
     console.log("Started on PORT ", PORT);
   });
 });
