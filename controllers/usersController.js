@@ -53,10 +53,11 @@ const signinUser = async (req, res) => {
         .cookie("token", token, {
           httpOnly: true,
           sameSite: "none",
-          secure: false,
+          secure: true,
           path: "/",
           domain: undefined,
           maxAge: 24 * 60 * 60 * 1000,
+          partitioned: true,
         })
         .json({ msg: "Login Successful" });
     } else {

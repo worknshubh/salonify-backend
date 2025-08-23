@@ -59,6 +59,7 @@ const signinSaloonOwner = async (req, res) => {
           path: "/",
           domain: undefined,
           maxAge: 24 * 60 * 60 * 1000,
+          partitioned: true,
         })
         .json({ msg: "Login Successful" });
     } else {
