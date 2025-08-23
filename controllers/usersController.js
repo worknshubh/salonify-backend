@@ -53,7 +53,7 @@ const signinUser = async (req, res) => {
         .cookie("token", token, {
           httpOnly: false,
           sameSite: "none",
-          secure: true,
+          secure: false,
           path: "/",
           domain: undefined,
           maxAge: 24 * 60 * 60 * 1000,
