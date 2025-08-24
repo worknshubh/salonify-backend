@@ -57,7 +57,7 @@ const signinUser = async (req, res) => {
           sameSite: "none", // allow cross-site
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         })
-        .send("Cookie set");
+        .json({ success: true, message: "Login successful" });
     } else {
       return res.json({ msg: "Invalid Email or Password" });
     }
