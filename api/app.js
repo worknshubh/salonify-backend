@@ -24,11 +24,7 @@ mongoose.connection.on("connected", () => {
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://127.0.0.1:5173",
-      "https://salonify-seven.vercel.app",
-    ],
+    origin: true,
     credentials: true,
   })
 );

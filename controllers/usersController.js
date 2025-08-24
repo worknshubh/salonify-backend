@@ -49,19 +49,15 @@ const signinUser = async (req, res) => {
     const userPasscheck = await bcrypt.compare(userPass, userCheck.userPass);
     if (userPasscheck === true) {
       const token = jsonwebtoken.sign({ id: userCheck._id }, JWT_KEY);
-      res.cookie("token", token, {
-        httpOnly: true,
-        sameSite: "none",
-        secure: true,
-        path: "/",
-        maxAge: 24 * 60 * 60 * 1000,
-      });
 
-      return res.json({
-        success: true,
-        msg: "Login Successful",
-        token: token,
-      });
+      return res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true, // Vercel uses HTTPS
+          sameSite: "none", // allow cross-site
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        })
+        .send("Cookie set");
     } else {
       return res.json({ msg: "Invalid Email or Password" });
     }
