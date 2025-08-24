@@ -24,10 +24,15 @@ mongoose.connection.on("connected", () => {
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: [
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "https://salonify-seven.vercel.app",
+    ],
     credentials: true,
   })
 );
+
 app.get("/", (req, res) => {
   res.send("Server is running!");
 });
