@@ -52,7 +52,7 @@ const signinSaloonOwner = async (req, res) => {
     if (userPasscheck === true) {
       const token = jsonwebtoken.sign({ id: userCheck._id }, JWT_KEY);
       res.cookie("token", token, {
-        httpOnly: false,
+        httpOnly: true,
         sameSite: "none",
         secure: true,
         path: "/",
