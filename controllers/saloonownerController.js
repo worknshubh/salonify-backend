@@ -53,7 +53,7 @@ const signinSaloonOwner = async (req, res) => {
       const token = jsonwebtoken.sign({ id: userCheck._id }, JWT_KEY);
       res.cookie("token", token, {
         httpOnly: false,
-        sameSite: "none",
+        sameSite: "lax",
         secure: true,
         path: "/",
         maxAge: 24 * 60 * 60 * 1000,
