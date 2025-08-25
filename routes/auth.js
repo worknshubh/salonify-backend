@@ -15,6 +15,14 @@ router.post("/user/signin", signinUser);
 router.get("/verifyrole", verifyRole);
 router.get("/info", fetchInfo);
 router.get("/logout", (req, res) => {
-  return res.clearCookie("token").json({ msg: "Logged out Successfully" });
+  return res
+    .clearCookie("token", {
+      httpOnly: false,
+      sameSite: "none",
+      secure: true,
+      path: "/",
+      maxAge: 24 * 60 * 60 * 1000,
+    })
+    .json({ msg: "Logged out Successfully" });
 });
 module.exports = router;
