@@ -21,7 +21,6 @@ router.get("/logout", (req, res) => {
       sameSite: "none",
       secure: true,
       path: "/",
-      maxAge: 24 * 60 * 60 * 1000,
     })
     .json({ msg: "Logged out Successfully" });
 });
