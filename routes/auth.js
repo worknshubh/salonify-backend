@@ -14,7 +14,7 @@ router.post("/user/signup", signupUser);
 router.post("/user/signin", signinUser);
 router.get("/verifyrole", verifyRole);
 router.get("/info", fetchInfo);
-router.get("/logut", (req, res) => {
+router.get("/logout", (req, res) => {
   return res.clearCookie("token").json({ msg: "Logged out Successfully" });
 });
 module.exports = router;
