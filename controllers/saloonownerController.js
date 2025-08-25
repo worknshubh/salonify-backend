@@ -59,11 +59,10 @@ const signinSaloonOwner = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000,
       });
 
-      // Also return token in response body
       return res.json({
         success: true,
         msg: "Login Successful",
-        token: token, // Add this
+        token: token,
       });
     } else {
       return res.json({ msg: "Invalid Email or Password" });
