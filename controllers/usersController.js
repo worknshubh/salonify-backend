@@ -50,7 +50,7 @@ const signinUser = async (req, res) => {
     if (userPasscheck === true) {
       const token = jsonwebtoken.sign({ id: userCheck._id }, JWT_KEY);
       res.cookie("token", token, {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none",
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
