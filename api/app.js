@@ -24,7 +24,7 @@ mongoose.connection.on("connected", () => {
 
 app.use(
   cors({
-    origin: true,
+    origin: "https://salonify-seven.vercel.app",
     credentials: true,
   })
 );
