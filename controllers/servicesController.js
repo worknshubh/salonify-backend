@@ -81,16 +81,20 @@ const deleteservice = async (req, res) => {
       const delService = await Service.findOne({
         shopOwner: tokenData.id,
       });
+
       const filteredServices = delService.servicesOffered.filter(
-        (el) => el._id.toString() != id.toString()
+        (el) => el._id.toString() !== id.toString()
       );
       delService.servicesOffered = filteredServices;
-      delService.save();
+      await delService.save();
+
       if (delService.servicesOffered.length === 0) {
         await SaloonOwner.findByIdAndUpdate(tokenData.id, {
           $pull: { services: delService._id },
         });
+        await Service.findByIdAndDelete(delService._id);
       }
+
       return res.json({ msg: "Service deleted successfully" });
     } catch (error) {
       return res.json({ msg: error.message });
