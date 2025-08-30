@@ -165,10 +165,40 @@ const myBookings = async (req, res) => {
   }
 };
 
+const signinUserMobile = async (req, res) => {
+  const { userEmail, userPass } = req.body;
+  const userCheck = await User.findOne({
+    userEmail: userEmail,
+  });
+
+  if (userCheck) {
+    const userPasscheck = await bcrypt.compare(userPass, userCheck.userPass);
+    if (userPasscheck === true) {
+      const token = jsonwebtoken.sign({ id: userCheck._id }, JWT_KEY);
+      res.cookie("token", token, {
+        httpOnly: false,
+        sameSite: "none",
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+      });
+
+      return res.json({
+        success: true,
+        msg: "Login Successful",
+        token: token,
+      });
+    } else {
+      return res.json({ msg: "Invalid Email or Password" });
+    }
+  } else {
+    return res.json({ msg: "Invalid Email or Password" });
+  }
+};
 module.exports = {
   signupUser,
   signinUser,
   bookService,
   updateProfile,
   myBookings,
+  signinUserMobile,
 };
