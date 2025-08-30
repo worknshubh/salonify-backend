@@ -18,7 +18,7 @@ router.post("/user/signup", signupUser);
 router.post("/user/signin", signinUser);
 router.get("/verifyrole", verifyRole);
 router.get("/info", fetchInfo);
-router.post("user/mobile/signin", signinUserMobile);
+router.post("/user/mobile/signin", signinUserMobile);
 router.get("/logout", (req, res) => {
   return res
     .clearCookie("token", {
